@@ -3,7 +3,7 @@ This is an in Kotlin written Data Miner for the OP.GG website, it requests the H
 Accounts, Ranked Data, Champions in a MySql Database.
 
 ## ATTENTION 
-This was never used in a runtime longer than around 20 seconds, since its a data mining tool than violates the Op.GG Terms of Use
+This was never used in a runtime longer than around 20 seconds, since its a data mining tool which violates the Op.GG Terms of Use
 
 ## Usage
 Java 8 or newer is required, this is a console only application, arguments could look like:
