@@ -1,5 +1,6 @@
 package com.toxayah.summonerdata
 
+import com.toxayah.summonerdata.core.DatabaseQueue
 import com.toxayah.summonerdata.core.Job
 import com.toxayah.summonerdata.include.FetcherType
 import com.toxayah.summonerdata.include.getDefault
@@ -8,6 +9,7 @@ import com.toxayah.summonerdata.utils.ChampionUtils
 var limit = 100000 * 10
 
 fun main(args: Array<String>) {
+
 
     var lVersion = ""
     val databaseOpts = getDefault()
@@ -43,4 +45,5 @@ fun main(args: Array<String>) {
         thread.start()
         println("Thread deployed")
     }
+
 }

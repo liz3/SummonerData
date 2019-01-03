@@ -14,35 +14,36 @@ import java.util.*
 
 class Job(type: FetcherType, private val region: String, entryName: String, private val dbOpts: DatabaseInfo = getDefault()) {
 
-    private val queue = LinkedList<String>()
     private lateinit var parser: Parser
+    var queue:DatabaseQueue
     private var database = DbApi(DatabaseConnection(dbOpts))
     private val requestFactory = RequestFactory()
     init {
         if (type == FetcherType.OPGG)
             parser = OpggParser()
+        queue = DatabaseQueue(dbOpts)
+        queue.setup("queue_${Thread.currentThread().id}")
+     //   queue.setup("queue_15")
         queue.add(entryName)
         cycle()
     }
     private fun cycle() {
+
         while (true) {
-            if (queue.size == 0) {
+            val target = queue.poll()
+            if (target == "") {
                 println("$region: Queue is empty, exiting")
                 return
             }
-            val target = queue.poll()
             val doc = Jsoup.parse(requestFactory.request(region, target))
-            println("$region: Processing $target")
+            println("[WORKER ${Thread.currentThread().id}]: Walking on $target")
             try {
                 val user = parser.parse(doc, region)
                 val users = parser.extractUsers(doc, user.username)
                 println("$region: Found ${users.size} other users in ${user.username}´s Profile")
                 for (n in users) {
                     if (!queue.contains(n) && !database.checkSummonerExists(n, region)) {
-                        if (queue.size <= limit)
-                            queue.add(n)
-                        else
-                            println("$region WARNING Reached Buffer List Limit")
+                        queue.add(n)
                     }
                 }
                 database.insertUser(user)
@@ -57,7 +58,6 @@ class Job(type: FetcherType, private val region: String, entryName: String, priv
                 }
             } catch (e: Exception) {
                 if (e is SQLNonTransientConnectionException) {
-                    if (!queue.contains(target)) queue.add(0, target)
                     while (true) {
                         try {
                             println("$region Database Connection dead, attempting reconnect")

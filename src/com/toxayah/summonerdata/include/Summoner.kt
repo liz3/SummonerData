@@ -10,12 +10,14 @@ enum class RankedQueueType {
 }
 enum class TierType {
     CHALLENGER,
+    GRANDMASTER,
     MASTER,
     DIAMOND,
     PLATINUM,
     GOLD,
     SILVER,
     BRONZE,
+    IRON,
     UNRANKED
 }
 
@@ -23,8 +25,7 @@ enum class RankType {
     I,
     II,
     III,
-    IV,
-    V
+    IV
 }
 data class Summoner(val summonerID: Int, val username: String, val region: String, val level: Int, var id: Int = -1)
 data class Champion(val userId: Int, val champId: Int, val champName: String, val games: Int, val winRatio: Int, val kda: String, var id: Int = -1)

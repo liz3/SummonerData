@@ -22,7 +22,7 @@ class OpggParser : Parser {
             if (teamEntry.parent().classNames().contains("Information")) continue
             val name = teamEntry.child(0).child(1).text()
             if (name == own) continue
-           if(!list.contains(name)) list.add(name)
+           if(!list.contains(name) && !name.isEmpty() && !name.isBlank()) list.add(name)
         }
         return list
     }
@@ -84,7 +84,7 @@ class OpggParser : Parser {
             return
         run {
             val tier = TierType.valueOf(firstEntry.child(1).child(0).child(0).text().split(" ")[0].toUpperCase())
-            val rank = if (tier == TierType.CHALLENGER || tier == TierType.MASTER)
+            val rank = if (tier == TierType.CHALLENGER || tier == TierType.MASTER || tier == TierType.GRANDMASTER)
                 RankType.I
             else
                 RankType.valueOf(toRomNum(firstEntry.child(1).child(0).child(0).text().split(" ")[1].toInt()))
@@ -96,12 +96,12 @@ class OpggParser : Parser {
 
             if (secEntry.child(1).text().contains("Unranked", true)) return
             val tier = TierType.valueOf(secEntry.child(1).text().split(" ")[0].toUpperCase())
-            val rank = if (tier == TierType.CHALLENGER || tier == TierType.MASTER)
+            val rank = if (tier == TierType.CHALLENGER || tier == TierType.MASTER || tier == TierType.GRANDMASTER)
                 RankType.I
             else
                 RankType.valueOf(toRomNum(secEntry.child(1).text().split(" ")[1].toInt()))
 
-            val points = if (tier == TierType.CHALLENGER || tier == TierType.MASTER)
+            val points = if (tier == TierType.CHALLENGER || tier == TierType.MASTER || tier == TierType.GRANDMASTER)
                 secEntry.child(1).text().split(" ")[1].replace(",", "").toInt()
             else
                 secEntry.child(1).text().split(" ")[2].toInt()
@@ -118,13 +118,13 @@ class OpggParser : Parser {
                 val secEntry = filter.child(1 + x)
                 val tier = TierType.valueOf(secEntry.child(1).text().split(" ")[0].toUpperCase())
 
-                val rank = if (tier == TierType.CHALLENGER || tier == TierType.MASTER)
+                val rank = if (tier == TierType.CHALLENGER || tier == TierType.MASTER || tier == TierType.GRANDMASTER)
                     RankType.I
                 else
                     RankType.valueOf(toRomNum(secEntry.child(1).text().split(" ")[1].toInt()))
 
 
-                val points = if (tier == TierType.CHALLENGER || tier == TierType.MASTER)
+                val points = if (tier == TierType.CHALLENGER || tier == TierType.MASTER || tier == TierType.GRANDMASTER)
                     secEntry.child(1).text().split(" ")[1].replace(",", "").toInt()
                 else
                     secEntry.child(1).text().split(" ")[2].replace(",", "").toInt()

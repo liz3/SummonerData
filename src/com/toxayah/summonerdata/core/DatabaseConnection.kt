@@ -71,12 +71,12 @@ class DbApi(private val connection: DatabaseConnection) {
         return true
     }
     fun insertRank(userId:Int, rank:Ranked): Boolean {
-        var st = connection.connection.prepareStatement("SELECT ID FROM ranks WHERE QUEUE = (?) AND UID = (?)")
+        var st = connection.connection.prepareStatement("SELECT ID FROM Ranks WHERE QUEUE = (?) AND UID = (?)")
         st.setString(1, rank.type.toString())
         st.setInt(2, userId)
         val result = st.executeQuery()
         if(result.next()) return true
-        st = connection.connection.prepareStatement("insert into ranks (UID, QUEUE, TIER, RANK, POINTS) values (?,?,?,?,?);")
+        st = connection.connection.prepareStatement("insert into Ranks (UID, QUEUE, TIER, RANK, POINTS) values (?,?,?,?,?);")
         st.setInt(1, userId)
         st.setString(2, rank.type.toString())
         st.setString(3, rank.tier.toString())
@@ -85,12 +85,12 @@ class DbApi(private val connection: DatabaseConnection) {
         return st.execute()
     }
     fun insertChampion(userId:Int, champ:Champion): Boolean {
-        var st = connection.connection.prepareStatement("SELECT ID from champions where CHAMPID = (?) and UID = (?)")
+        var st = connection.connection.prepareStatement("SELECT ID from Champions where CHAMPID = (?) and UID = (?)")
         st.setInt(1, champ.champId)
         st.setInt(2, userId)
         val result = st.executeQuery()
         if(result.next()) return true
-        st = connection.connection.prepareStatement("insert into champions (UID, CHAMPID, NAME, GAMES, RATIO, KDA) values (?,?,?,?,?,?);")
+        st = connection.connection.prepareStatement("insert into Champions (UID, CHAMPID, NAME, GAMES, RATIO, KDA) values (?,?,?,?,?,?);")
         st.setInt(1, userId)
         st.setInt(2, champ.champId)
         st.setString(3, champ.champName)

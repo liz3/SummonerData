@@ -22,7 +22,7 @@ fun httpRequest(target: String, method: String = "GET", headers: Map<String, Str
     connection.instanceFollowRedirects = true
     connection.doInput = true
     connection.doOutput = true
-    connection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36")
+    connection.setRequestProperty("User-Agent", "21xayah.com / indexer")
     connection.setRequestProperty("Pragma", "no-cache")
     connection.setRequestProperty("Accept-Language", "en-GB,en;q=0.9,de-DE;q=0.8,de;q=0.7,en-US;q=0.6")
     connection.setRequestProperty("Cache-Control", "no-cache")

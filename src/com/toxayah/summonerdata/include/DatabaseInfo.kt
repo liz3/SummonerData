@@ -4,5 +4,5 @@ data class DatabaseInfo(var host:String, var user:String, var password:String, v
 
 
 fun getDefault() : DatabaseInfo {
-    return DatabaseInfo("localhost", "root", "", "summoner")
+    return DatabaseInfo("localhost", "root", "", "summoners")
 }
